@@ -8,8 +8,8 @@ Please read through NodeJS_Assessment.pdf carefully before you attempt.
 
 ## Prerequisites
 
-- NodeJS v12.x.x
-- Docker
+- NodeJS v12.22.12 (with nvm-windows v1.1.9)
+- Docker Desktop 4.38.0 (181591) (Docker Engine v27.5.1)
 
 <br>
 
