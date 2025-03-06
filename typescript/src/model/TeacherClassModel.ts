@@ -19,9 +19,34 @@ const defineTeacherClass = sequelize.define<TeacherClassModel>('TeacherClass', {
     autoIncrement: true,
     allowNull: false,
   },
+  teacherSubjectId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'TeacherSubjects',
+      key: 'id',
+    },
+  },
+  classId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'classes',
+      key: 'id',
+    },
+  },
 });
 
-defineTeacherSubject.belongsToMany(defineClass, { through: 'TeacherClass' });
-defineClass.belongsToMany(defineTeacherSubject, { through: 'TeacherClass' });
+defineTeacherSubject.belongsToMany(defineClass, {
+  through: defineTeacherClass,
+  foreignKey: 'teacherSubjectId',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+defineClass.belongsToMany(defineTeacherSubject, {
+  through: defineTeacherClass,
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 
 export default defineTeacherClass;

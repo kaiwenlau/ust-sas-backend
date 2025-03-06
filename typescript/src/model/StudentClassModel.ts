@@ -19,9 +19,33 @@ const defineStudentClass = sequelize.define<StudentClassModel>('StudentClass', {
     autoIncrement: true,
     allowNull: false,
   },
+  studentId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'students',
+      key: 'id',
+    },
+  },
+  classId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'classes',
+      key: 'id',
+    },
+  },
 });
 
-defineStudent.belongsToMany(defineClass, { through: 'StudentClass' });
-defineClass.belongsToMany(defineStudent, { through: 'StudentClass' });
+defineStudent.belongsToMany(defineClass, {
+  through: defineStudentClass,
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+defineClass.belongsToMany(defineStudent, {
+  through: defineStudentClass,
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 
 export default defineStudentClass;

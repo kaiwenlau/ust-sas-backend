@@ -21,10 +21,34 @@ const defineTeacherSubject = sequelize.define<TeacherSubjectModel>(
       autoIncrement: true,
       allowNull: false,
     },
+    teacherId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'teachers',
+        key: 'id',
+      },
+    },
+    subjectId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'subjects',
+        key: 'id',
+      },
+    },
   }
 );
 
-defineTeacher.belongsToMany(defineSubject, { through: 'TeacherSubject' });
-defineSubject.belongsToMany(defineTeacher, { through: 'TeacherSubject' });
+defineTeacher.belongsToMany(defineSubject, {
+  through: defineTeacherSubject,
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+defineSubject.belongsToMany(defineTeacher, {
+  through: defineTeacherSubject,
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
 
 export default defineTeacherSubject;

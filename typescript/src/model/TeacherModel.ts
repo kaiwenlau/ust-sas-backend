@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 import Logger from '../config/logger';
+import defineTeacherSubject from './TeacherSubjectModel';
 
 const LOG = new Logger('TeacherModel.ts');
 
