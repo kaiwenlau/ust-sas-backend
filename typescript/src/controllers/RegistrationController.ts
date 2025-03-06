@@ -1,6 +1,5 @@
-import Express, { RequestHandler, response } from 'express';
+import Express, { RequestHandler } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import Sequelize from 'sequelize';
 import sequelize from '../config/database';
 import Logger from '../config/logger';
 import defineTeacher from '../model/TeacherModel';
@@ -73,7 +72,7 @@ const updateTeacher = async (reqTeacher: ReqTeacher) => {
   });
 
   if (created) {
-    LOG.info(`New teacher created.`);
+    LOG.info('New teacher created.');
   } else {
     await defineTeacher.update(
       {
@@ -85,7 +84,7 @@ const updateTeacher = async (reqTeacher: ReqTeacher) => {
         },
       }
     );
-    LOG.info(`Teacher name updated.`);
+    LOG.info('Teacher name updated.');
   }
   return teacher.id;
 };
@@ -101,7 +100,7 @@ const updateStudents = async (reqStudents: ReqStudents) => {
       defaults: { name: reqStudent.name },
     });
     if (created) {
-      LOG.info(`New student created.`);
+      LOG.info('New student created.');
     } else {
       await defineStudent.update(
         {
@@ -113,7 +112,7 @@ const updateStudents = async (reqStudents: ReqStudents) => {
           },
         }
       );
-      LOG.info(`Student name updated.`);
+      LOG.info('Student name updated.');
     }
     studentIds.push(student.id);
   });
@@ -129,7 +128,7 @@ const updateSubject = async (reqSubject: ReqSubject) => {
     defaults: { name: reqSubject.name },
   });
   if (created) {
-    LOG.info(`New subject created.`);
+    LOG.info('New subject created.');
   } else {
     await defineSubject.update(
       {
@@ -141,7 +140,7 @@ const updateSubject = async (reqSubject: ReqSubject) => {
         },
       }
     );
-    LOG.info(`Subject name updated.`);
+    LOG.info('Subject name updated.');
   }
   return subject.id;
 };
@@ -155,7 +154,7 @@ const updateClass = async (reqClass: ReqClass) => {
     defaults: { name: reqClass.name },
   });
   if (created) {
-    LOG.info(`New class created.`);
+    LOG.info('New class created.');
   } else {
     await defineClass.update(
       {
@@ -167,7 +166,7 @@ const updateClass = async (reqClass: ReqClass) => {
         },
       }
     );
-    LOG.info(`Class name updated.`);
+    LOG.info('Class name updated.');
   }
   return classes.id;
 };
@@ -177,9 +176,9 @@ const updateTeacherSubject = async (teacherId: number, subjectId: number) => {
     where: { teacherId: teacherId, subjectId: subjectId },
   });
   if (created) {
-    LOG.info(`New teacher subject created.`);
+    LOG.info('New teacher subject created.');
   } else {
-    LOG.info(`Teacher subject link existed.`);
+    LOG.info('Teacher subject link existed.');
   }
   return teacherSubject.id;
 };
@@ -189,12 +188,12 @@ const updateTeacherClass = async (
   classId: number
 ) => {
   const [teacherClass, created] = await defineTeacherClass.findOrCreate({
-    where: { TeacherSubjectId: teacherSubjectId, classId: classId },
+    where: { teacherSubjectId: teacherSubjectId, classId: classId },
   });
   if (created) {
-    LOG.info(`New teacher class created.`);
+    LOG.info('New teacher class created.');
   } else {
-    LOG.info(`Teacher class link existed.`);
+    LOG.info('Teacher class link existed.');
   }
 };
 
@@ -204,9 +203,9 @@ const updateStudentClass = async (studentIds: number[], classId: number) => {
       where: { studentId: studentId, classId: classId },
     });
     if (created) {
-      LOG.info(`New student class created.`);
+      LOG.info('New student class created.');
     } else {
-      LOG.info(`Student class link existed.`);
+      LOG.info('Student class link existed.');
     }
   });
 };
